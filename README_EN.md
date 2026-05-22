@@ -19,6 +19,10 @@
   <a href="README.md">中文</a> · <b>English</b>
 </p>
 
+<p align="center">
+  <img src="宣传图.png" width="800" alt="SOP Skill Promo">
+</p>
+
 ---
 
 ## What is SOP Skill?
