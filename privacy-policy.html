@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy - SOP Skill</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.8;
+            color: #1a1a2e;
+            background: #fafafa;
+            padding: 40px 20px;
+        }
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            background: #fff;
+            border-radius: 12px;
+            padding: 48px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+        }
+        h1 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: #0f0f23;
+        }
+        .updated {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 32px;
+        }
+        h2 {
+            font-size: 18px;
+            font-weight: 600;
+            margin: 32px 0 12px;
+            color: #0f0f23;
+            border-bottom: 2px solid #e8e8e8;
+            padding-bottom: 6px;
+        }
+        p { margin-bottom: 14px; color: #333; }
+        ul { margin: 8px 0 14px 24px; }
+        li { margin-bottom: 8px; color: #333; }
+        strong { color: #1a1a2e; }
+        .highlight {
+            background: #f0f7ff;
+            border-left: 4px solid #3b82f6;
+            padding: 14px 18px;
+            border-radius: 0 8px 8px 0;
+            margin: 16px 0;
+        }
+        .lang-switch {
+            text-align: right;
+            margin-bottom: 24px;
+            font-size: 14px;
+        }
+        .lang-switch a {
+            color: #3b82f6;
+            text-decoration: none;
+            margin-left: 12px;
+        }
+        .lang-switch a:hover { text-decoration: underline; }
+        #zh { display: none; }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 12px 0 16px;
+        }
+        th, td {
+            text-align: left;
+            padding: 10px 12px;
+            border: 1px solid #e8e8e8;
+            font-size: 14px;
+        }
+        th { background: #f5f5f5; font-weight: 600; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="lang-switch">
+            <a href="#" onclick="toggleLang('en'); return false;">English</a>
+            <a href="#" onclick="toggleLang('zh'); return false;">中文</a>
+        </div>
+
+        <!-- English Version -->
+        <div id="en">
+            <h1>Privacy Policy</h1>
+            <p class="updated">Last updated: May 2026 &middot; Applicable to: SOP Skill Chrome Extension</p>
+
+            <div class="highlight">
+                <strong>In short:</strong> SOP Skill does not collect, store, or transmit any of your personal data to our servers. All processing happens locally in your browser.
+            </div>
+
+            <h2>1. Data We Do NOT Collect</h2>
+            <p>SOP Skill does not have any backend servers. We do not collect:</p>
+            <ul>
+                <li>Personal identification information (name, email, etc.)</li>
+                <li>Browsing history or website content</li>
+                <li>Recorded workflows or SOP documents</li>
+                <li>Screenshots or audio recordings</li>
+                <li>Usage analytics or telemetry</li>
+                <li>Cookies or tracking identifiers</li>
+            </ul>
+
+            <h2>2. Data Stored Locally</h2>
+            <p>All data is stored exclusively in your browser using <code>chrome.storage.local</code>:</p>
+            <ul>
+                <li><strong>API keys</strong> — Credentials for speech-to-text providers (Deepgram or Aliyun) that you configure yourself</li>
+                <li><strong>Recording sessions</strong> — Captured actions, screenshots, and voice narrations during a recording</li>
+                <li><strong>User preferences</strong> — Language and UI settings</li>
+            </ul>
+            <p>This data never leaves your device and is automatically deleted when you uninstall the extension or clear your browser data.</p>
+
+            <h2>3. Third-Party Services</h2>
+            <p>SOP Skill optionally connects to the following third-party services for speech-to-text functionality. <strong>These features are entirely optional</strong> and only activate when you provide your own API key:</p>
+            <table>
+                <tr>
+                    <th>Service</th>
+                    <th>Purpose</th>
+                    <th>Data Sent</th>
+                </tr>
+                <tr>
+                    <td>Deepgram</td>
+                    <td>Real-time speech recognition</td>
+                    <td>Audio from your microphone (real-time stream)</td>
+                </tr>
+                <tr>
+                    <td>Alibaba Cloud (Aliyun Qwen)</td>
+                    <td>Real-time speech recognition</td>
+                    <td>Audio from your microphone (real-time stream)</td>
+                </tr>
+            </table>
+            <p>Audio data is streamed in real-time via WebSocket and is <strong>not stored by SOP Skill</strong>. Please review the privacy policies of these providers:</p>
+            <ul>
+                <li><a href="https://deepgram.com/privacy" target="_blank">Deepgram Privacy Policy</a></li>
+                <li><a href="https://www.alibabacloud.com/zh/product/privacy" target="_blank">Alibaba Cloud Privacy Policy</a></li>
+            </ul>
+
+            <h2>4. Screenshots</h2>
+            <p>SOP Skill captures screenshots of web pages during recording sessions to document your workflow. These screenshots are:</p>
+            <ul>
+                <li>Processed entirely within your browser</li>
+                <li>Annotated locally using Canvas API in an offscreen document</li>
+                <li>Never uploaded to any server</li>
+                <li>Embedded only in locally generated SOP documents</li>
+            </ul>
+
+            <h2>5. Permissions Explained</h2>
+            <p>SOP Skill requests only the permissions necessary for its core functionality:</p>
+            <ul>
+                <li><strong>activeTab</strong> — Access the current tab when you start recording</li>
+                <li><strong>sidePanel</strong> — Display the recording UI in Chrome's side panel</li>
+                <li><strong>storage</strong> — Save your settings and API keys locally</li>
+                <li><strong>scripting</strong> — Inject the action capture script into web pages</li>
+                <li><strong>clipboardWrite</strong> — Copy SOP text to clipboard when you click "Copy"</li>
+                <li><strong>offscreen</strong> — Process screenshots for click-position annotation</li>
+                <li><strong>webNavigation</strong> — Detect page navigations during recording</li>
+            </ul>
+
+            <h2>6. Children's Privacy</h2>
+            <p>SOP Skill is not directed at children under 13 and does not knowingly collect any information from children.</p>
+
+            <h2>7. Changes to This Policy</h2>
+            <p>We may update this privacy policy from time to time. Any changes will be reflected on this page with an updated "Last updated" date.</p>
+
+            <h2>8. Contact</h2>
+            <p>If you have questions about this privacy policy, please open an issue on our <a href="https://github.com/jeff2023pro/sop-skill" target="_blank">GitHub repository</a>.</p>
+        </div>
+
+        <!-- Chinese Version -->
+        <div id="zh">
+            <h1>隐私政策</h1>
+            <p class="updated">最后更新：2026年5月 &middot; 适用于：SOP Skill Chrome 扩展</p>
+
+            <div class="highlight">
+                <strong>简而言之：</strong>SOP Skill 不会收集、存储或向我们的服务器传输您的任何个人数据。所有处理均在您的浏览器中本地完成。
+            </div>
+
+            <h2>1. 我们不收集的数据</h2>
+            <p>SOP Skill 没有任何后端服务器。我们不收集：</p>
+            <ul>
+                <li>个人身份信息（姓名、邮箱等）</li>
+                <li>浏览历史或网页内容</li>
+                <li>录制的工作流或 SOP 文档</li>
+                <li>截图或录音</li>
+                <li>使用分析或遥测数据</li>
+                <li>Cookie 或追踪标识符</li>
+            </ul>
+
+            <h2>2. 本地存储的数据</h2>
+            <p>所有数据仅通过 <code>chrome.storage.local</code> 存储在您的浏览器中：</p>
+            <ul>
+                <li><strong>API 密钥</strong> — 您自行配置的语音转文字服务提供商（Deepgram 或阿里云）凭证</li>
+                <li><strong>录制会话</strong> — 录制过程中捕获的操作、截图和语音讲解</li>
+                <li><strong>用户偏好</strong> — 语言和界面设置</li>
+            </ul>
+            <p>这些数据永远不会离开您的设备，卸载扩展或清除浏览器数据时会自动删除。</p>
+
+            <h2>3. 第三方服务</h2>
+            <p>SOP Skill 可选连接以下第三方服务以提供语音转文字功能。<strong>这些功能完全可选</strong>，仅在您提供自己的 API 密钥时才会激活：</p>
+            <table>
+                <tr>
+                    <th>服务</th>
+                    <th>用途</th>
+                    <th>传输的数据</th>
+                </tr>
+                <tr>
+                    <td>Deepgram</td>
+                    <td>实时语音识别</td>
+                    <td>麦克风音频（实时流）</td>
+                </tr>
+                <tr>
+                    <td>阿里云（通义千问）</td>
+                    <td>实时语音识别</td>
+                    <td>麦克风音频（实时流）</td>
+                </tr>
+            </table>
+            <p>音频数据通过 WebSocket 实时传输，<strong>SOP Skill 不存储任何音频</strong>。请查阅这些提供商的隐私政策：</p>
+            <ul>
+                <li><a href="https://deepgram.com/privacy" target="_blank">Deepgram 隐私政策</a></li>
+                <li><a href="https://www.alibabacloud.com/zh/product/privacy" target="_blank">阿里云隐私政策</a></li>
+            </ul>
+
+            <h2>4. 截图</h2>
+            <p>SOP Skill 在录制会话期间捕获网页截图以记录您的工作流。这些截图：</p>
+            <ul>
+                <li>完全在您的浏览器中处理</li>
+                <li>通过 Offscreen 文档中的 Canvas API 在本地标注</li>
+                <li>永远不会上传到任何服务器</li>
+                <li>仅嵌入在本地生成的 SOP 文档中</li>
+            </ul>
+
+            <h2>5. 权限说明</h2>
+            <p>SOP Skill 仅请求核心功能所需的权限：</p>
+            <ul>
+                <li><strong>activeTab</strong> — 开始录制时访问当前标签页</li>
+                <li><strong>sidePanel</strong> — 在 Chrome 侧栏中显示录制界面</li>
+                <li><strong>storage</strong> — 在本地保存设置和 API 密钥</li>
+                <li><strong>scripting</strong> — 将操作捕获脚本注入网页</li>
+                <li><strong>clipboardWrite</strong> — 点击「复制」时将 SOP 文本复制到剪贴板</li>
+                <li><strong>offscreen</strong> — 处理截图以标注点击位置</li>
+                <li><strong>webNavigation</strong> — 录制期间检测页面导航</li>
+            </ul>
+
+            <h2>6. 儿童隐私</h2>
+            <p>SOP Skill 不面向 13 岁以下儿童，也不会有意收集儿童的任何信息。</p>
+
+            <h2>7. 政策变更</h2>
+            <p>我们可能会不时更新本隐私政策。任何更改将在此页面上反映，并更新「最后更新」日期。</p>
+
+            <h2>8. 联系方式</h2>
+            <p>如果您对本隐私政策有疑问，请在我们的 <a href="https://github.com/jeff2023pro/sop-skill" target="_blank">GitHub 仓库</a>中提交 Issue。</p>
+        </div>
+    </div>
+
+    <script>
+        function toggleLang(lang) {
+            document.getElementById('en').style.display = lang === 'en' ? 'block' : 'none';
+            document.getElementById('zh').style.display = lang === 'zh' ? 'block' : 'none';
+        }
+        // Default to English
+        toggleLang('en');
+    </script>
+</body>
+</html>

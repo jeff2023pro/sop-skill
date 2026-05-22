@@ -1,0 +1,21 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Dependencies
+node_modules/
+
+# Sensitive files
+*.pem
+*.key
+*.p12
+*.crt
+
+# Build artifacts
+*.crx
+*.zip
+*.xpi
+dist/

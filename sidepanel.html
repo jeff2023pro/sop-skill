@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SOP.skill 蒸馏助手</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="sidepanel.css">
+</head>
+
+<body>
+  <div class="bg-layer bg-layer-a"></div>
+  <div class="bg-layer bg-layer-b"></div>
+
+  <main class="panel-shell">
+
+    <!-- ── Global Top Nav ── -->
+    <header class="top-nav" id="top-nav">
+      <div class="top-nav-brand">
+        <img alt="SOP.skill" class="top-nav-logo" />
+        <span class="top-nav-name">SOP<span class="top-nav-dot">.</span>skill</span>
+      </div>
+      <div class="top-nav-right">
+        <!-- 主页 — 常驻 -->
+        <button id="btn-redo" class="top-nav-btn active" title="返回主页" type="button" aria-label="返回主页">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2 6.5L8 2l6 4.5V14a1 1 0 01-1 1H3a1 1 0 01-1-1V6.5z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/><path d="M6 15v-5h4v5" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>
+        </button>
+        <!-- 蒸馏记录 -->
+        <button id="btn-history" class="top-nav-btn" title="蒸馏记录" type="button" aria-label="蒸馏记录">
+          <svg width="16" height="16" viewBox="0 0 14 14" fill="none" aria-hidden="true"><circle cx="7" cy="7" r="5.5" stroke="currentColor" stroke-width="1.3"/><path d="M7 4.5V7l2.5 1.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span id="hist-count-badge" class="top-nav-hist-badge"></span>
+        </button>
+        <!-- 漫画 -->
+        <button id="btn-comic" class="top-nav-btn" data-i18n-title="comicTitle" title="PP连载漫画" type="button" aria-label="PP连载漫画">
+          <!-- ghost icon (Lucide) -->
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 10h.01M15 10h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M12 2a8 8 0 0 0-8 8v12l3-2 3 2 3-2 3 2 3-2 3 2V10a8 8 0 0 0-8-8z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+        </button>
+        <!-- 设置 — sliders icon -->
+        <a href="#" id="link-settings" class="top-nav-btn" title="设置" aria-label="设置">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <path d="M2 4h3.5M9.5 4H14" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+            <circle cx="6.5" cy="4" r="1.6" stroke="currentColor" stroke-width="1.4"/>
+            <path d="M2 8.5h6.5M12.5 8.5H14" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+            <circle cx="11" cy="8.5" r="1.6" stroke="currentColor" stroke-width="1.4"/>
+            <path d="M2 13h3.5M9.5 13H14" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+            <circle cx="7.5" cy="13" r="1.6" stroke="currentColor" stroke-width="1.4"/>
+          </svg>
+        </a>
+      </div>
+    </header>
+
+    <!-- ① 待机 -->
+    <div id="view-idle" class="view active">
+      <div class="hero">
+        <!-- Logo mark — parrot mascot -->
+        <div class="logo-mark">
+          <video class="logo-video" autoplay loop muted playsinline></video>
+        </div>
+        <h1 class="logo-text"><span class="logo-brand">SOP.skill</span><span data-i18n="heroTitle"> 蒸馏助手</span></h1>
+        <p class="logo-sub" data-i18n="logoSub">SOP蒸馏 + Playwright 自动化才是 B 端工作流的未来</p>
+        <div class="hero-sep"></div>
+        <p id="tagline" class="tagline">录制一次，AI复刻你的工作流</p>
+        <div class="hero-chips">
+          <span class="hero-chip" data-i18n="heroChip1">录制操作</span>
+          <span class="hero-chip-arrow">→</span>
+          <span class="hero-chip" data-i18n="heroChip2">SOP 蒸馏</span>
+          <span class="hero-chip-arrow">→</span>
+          <span class="hero-chip hero-chip--accent">Playwright</span>
+          <span class="hero-chip-arrow">→</span>
+          <span class="hero-chip hero-chip--mcp" data-i18n="heroChip4">AI 自动化</span>
+        </div>
+      </div>
+
+      <!-- Step list — vertical stepper (main flow) -->
+      <div class="inst-list">
+
+        <!-- Step 1: One-time MCP server setup -->
+        <div class="inst-row">
+          <div class="inst-row-left">
+            <div class="inst-row-icon inst-row-icon--setup">
+              <!-- Terminal icon -->
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><rect x="1.5" y="2" width="11" height="10" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M4 5.5l2 2-2 2" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><line x1="7.5" y1="9.5" x2="10" y2="9.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+            </div>
+            <div class="inst-row-connector"></div>
+          </div>
+          <div class="inst-row-content">
+            <div class="inst-row-header">
+              <span class="inst-row-num">01</span>
+              <span id="inst-1" class="inst-row-title">启动本地 MCP Server</span>
+              <span class="inst-once-badge" data-i18n="instOnceBadge">首次配置</span>
+            </div>
+            <p class="inst-row-desc" data-i18n-html="instDesc1">安装并运行 <code class="inst-code">sop-mcp-server</code>，Claude Code 即可接收录制数据（安装方法见设置页）</p>
+          </div>
+        </div>
+
+        <!-- Step 2: Open target page -->
+        <div class="inst-row">
+          <div class="inst-row-left">
+            <div class="inst-row-icon">
+              <!-- External link / navigate icon -->
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M5.5 2H3a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V9" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/><path d="M8.5 2H12V5.5M12 2 7 7" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <div class="inst-row-connector"></div>
+          </div>
+          <div class="inst-row-content">
+            <div class="inst-row-header">
+              <span class="inst-row-num">02</span>
+              <span id="inst-2" class="inst-row-title">打开目标工作台</span>
+            </div>
+            <p class="inst-row-desc" data-i18n="instDesc2">在 Chrome 中进入需要录制的 B 端页面</p>
+          </div>
+        </div>
+
+        <!-- Step 3: Record + voice -->
+        <div class="inst-row">
+          <div class="inst-row-left">
+            <div class="inst-row-icon inst-row-icon--rec">
+              <!-- Record dot -->
+              <svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor" aria-hidden="true"><circle cx="5" cy="5" r="5"/></svg>
+            </div>
+            <div class="inst-row-connector"></div>
+          </div>
+          <div class="inst-row-content">
+            <div class="inst-row-header">
+              <span class="inst-row-num">03</span>
+              <span id="inst-3" class="inst-row-title">录制操作 + 语音讲解</span>
+            </div>
+            <p class="inst-row-desc" data-i18n="instDesc3">边操作边说每步意图，结束后停止录制</p>
+          </div>
+        </div>
+
+        <!-- Step 4: Push to Claude Code → Playwright -->
+        <div class="inst-row">
+          <div class="inst-row-left">
+            <div class="inst-row-icon inst-row-icon--mcp">
+              <!-- Send / push icon -->
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M7 11V3M7 3L4 6M7 3l3 3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M2 12h10" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+            </div>
+          </div>
+          <div class="inst-row-content">
+            <div class="inst-row-header">
+              <span class="inst-row-num">04</span>
+              <span id="inst-4" class="inst-row-title">推送 → Claude Code 生成 Playwright</span>
+            </div>
+            <p class="inst-row-desc" data-i18n="instDesc4">一键推送到 Claude Code，自动蒸馏为可运行的 Playwright 测试脚本</p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- MCP Environment Status Bar -->
+      <div id="idle-mcp-bar" class="idle-mcp-bar idle-mcp-bar--checking">
+        <div class="idle-mcp-left">
+          <span class="idle-mcp-dot"></span>
+          <span id="idle-mcp-label" class="idle-mcp-label">正在检测 MCP Server…</span>
+        </div>
+        <code id="idle-mcp-cmd" class="idle-mcp-cmd hidden">sop-mcp-server</code>
+      </div>
+
+      <!-- Idle bottom actions — pushed to bottom by inst-list flex:1 -->
+      <div class="idle-actions">
+        <button id="btn-start" class="btn btn-primary btn-lg">
+          <span class="bi-svg">
+            <svg width="13" height="13" viewBox="0 0 13 13" fill="currentColor" aria-hidden="true"><circle cx="6.5" cy="6.5" r="5.5"/></svg>
+          </span>
+          <span data-i18n="startRecording">开始录制</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- ② 蒸馏记录面板 -->
+    <div id="view-history" class="view">
+      <div class="set-header">
+        <button id="btn-hist-back" class="set-back" type="button" data-i18n-aria="goBack" aria-label="返回">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M10 3L5 8l5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <span class="set-title" data-i18n="histTitle">蒸馏记录</span>
+        <button id="btn-hist-calendar" class="hist-calendar-btn" type="button" title="蒸馏日历" aria-label="蒸馏日历">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M16 2v4M8 2v4M3 10h18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle cx="8" cy="15" r="1.2" fill="currentColor"/><circle cx="12" cy="15" r="1.2" fill="currentColor"/><circle cx="16" cy="15" r="1.2" fill="currentColor"/></svg>
+        </button>
+        <button id="btn-hist-batch" class="hist-batch-toggle" type="button" data-i18n="histBatchToggle">选择</button>
+      </div>
+      <!-- Calendar popup -->
+      <div id="hist-calendar" class="hist-calendar hidden">
+        <div class="hist-cal-header">
+          <button id="btn-cal-prev" class="hist-cal-nav" type="button" aria-label="上月">
+            <svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8l5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <span id="hist-cal-month" class="hist-cal-month"></span>
+          <button id="btn-cal-next" class="hist-cal-nav" type="button" aria-label="下月">
+            <svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M6 3l5 5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+        <div class="hist-cal-weekdays">
+          <span>日</span><span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span>
+        </div>
+        <div id="hist-cal-grid" class="hist-cal-grid"></div>
+        <div class="hist-cal-legend">
+          <span class="hist-cal-legend-label">少</span>
+          <span class="hist-cal-cell hist-cal-cell--0"></span>
+          <span class="hist-cal-cell hist-cal-cell--1"></span>
+          <span class="hist-cal-cell hist-cal-cell--5"></span>
+          <span class="hist-cal-cell hist-cal-cell--10"></span>
+          <span class="hist-cal-legend-label">多</span>
+        </div>
+      </div>
+      <!-- Search bar -->
+      <div class="hist-search-wrap">
+        <svg class="hist-search-icon" width="13" height="13" viewBox="0 0 14 14" fill="none" aria-hidden="true"><circle cx="6" cy="6" r="4.5" stroke="currentColor" stroke-width="1.3"/><path d="M10 10l2.5 2.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+        <input id="hist-search" class="hist-search-input" type="search" data-i18n-placeholder="histSearchPlaceholder" placeholder="搜索记录…" autocomplete="off" />
+      </div>
+
+      <div id="hist-list" class="hist-list">
+        <div class="hist-empty" id="hist-empty">
+          <svg width="36" height="36" viewBox="0 0 36 36" fill="none" aria-hidden="true"><circle cx="18" cy="18" r="13" stroke="#C7D2FE" stroke-width="1.5"/><path d="M18 12v6l3.5 3.5" stroke="#818CF8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <p data-i18n="histEmpty">暂无蒸馏记录</p>
+          <p class="hist-empty-sub" data-i18n="histEmptySub">完成一次录制后自动保存</p>
+        </div>
+      </div>
+      <!-- Floating batch action bar (shown when ≥1 item selected) -->
+      <div id="hist-batch-bar" class="hist-batch-bar hidden">
+        <span id="hist-batch-count-label" class="hist-batch-count">0 条已选</span>
+        <div class="hist-batch-actions">
+          <button id="btn-hist-select-all" class="hist-batch-btn" type="button" data-i18n="histSelectAll">全选</button>
+          <button id="btn-hist-delete-sel" class="hist-batch-btn hist-batch-btn--danger" type="button" data-i18n="histDeleteSel">删除</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ③ 设置面板（in-panel） -->
+    <div id="view-settings" class="view">
+      <div class="set-header">
+        <button id="btn-settings-back" class="set-back" type="button" data-i18n-aria="goBack" aria-label="返回">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M10 3L5 8l5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <span class="set-title" data-i18n="settingsTitle">设置</span>
+      </div>
+
+      <div class="set-body">
+
+        <!-- ── Hero Video Switcher ── -->
+        <div class="set-section">
+          <div class="set-section-label" data-i18n="setHeroVideo">首页动画</div>
+          <div id="hero-video-grid" class="hero-video-grid"></div>
+        </div>
+
+        <!-- ── Appearance & Language ── -->
+        <div class="set-section">
+          <div class="set-section-label" data-i18n="setAppearanceLang">外观 & 语言</div>
+          <div class="set-row">
+            <div class="set-row-label">
+              <!-- Sun/moon split: clean 2-part circle -->
+              <svg width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                <circle cx="8" cy="8" r="3.2" stroke="currentColor" stroke-width="1.3"/>
+                <path d="M8 1.5v1.2M8 13.3v1.2M1.5 8h1.2M13.3 8h1.2" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+                <path d="M3.7 3.7l.85.85M11.45 11.45l.85.85M3.7 12.3l.85-.85M11.45 4.55l.85-.85" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+              </svg>
+              <span data-i18n="setAppearanceMode">外观模式</span>
+            </div>
+            <div class="lang-seg" id="theme-seg">
+              <button class="lang-seg-btn" data-theme="dark" type="button" data-i18n="setThemeDark">深色</button>
+              <button class="lang-seg-btn" data-theme="" type="button" data-i18n="setThemeLight">浅色</button>
+            </div>
+          </div>
+          <div class="set-row">
+            <div class="set-row-label">
+              <!-- Globe: circle + meridians + equator -->
+              <svg width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                <circle cx="8" cy="8" r="5.8" stroke="currentColor" stroke-width="1.3"/>
+                <path d="M8 2.2c-1.8 1.3-3 3.3-3 5.8s1.2 4.5 3 5.8" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+                <path d="M8 2.2c1.8 1.3 3 3.3 3 5.8s-1.2 4.5-3 5.8" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+                <line x1="2.2" y1="8" x2="13.8" y2="8" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+                <path d="M3 5.5h10M3 10.5h10" stroke="currentColor" stroke-width="1" stroke-linecap="round" opacity="0.5"/>
+              </svg>
+              <span data-i18n="setUiLang">界面语言</span>
+            </div>
+            <div class="lang-seg">
+              <button class="lang-seg-btn" data-lang="zh" type="button">中文</button>
+              <button class="lang-seg-btn" data-lang="en" type="button">EN</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── MCP 安装指引 ── -->
+        <div class="set-section">
+          <div class="set-section-label" data-i18n="setMcpSection">MCP安装
+            <button id="btn-copy-mcp-all" class="btn btn-sm mcp-cc-all-btn" type="button" title="复制全部">
+              <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true"><rect x="5" y="2" width="9" height="11" rx="1.5" stroke="currentColor" stroke-width="1.4"/><path d="M3 5v8.5a1.5 1.5 0 001.5 1.5H11" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+              <span>复制全部</span>
+            </button>
+          </div>
+          <div class="mcp-guide-row">
+            <span class="mcp-guide-step-num">1</span>
+            <div class="mcp-guide-body">
+              <span class="mcp-guide-label" data-i18n="mcpStep1Label">全局安装（仅需一次）</span>
+              <div class="mcp-guide-cmd-wrap">
+                <code class="mcp-guide-cmd" id="mcp-cmd-1">npm install -g sop-mcp-server</code>
+                <button class="mcp-guide-copy" data-copy="mcp-cmd-1" type="button" title="复制">
+                  <svg width="11" height="11" viewBox="0 0 16 16" fill="none" aria-hidden="true"><rect x="5" y="2" width="9" height="11" rx="1.5" stroke="currentColor" stroke-width="1.4"/><path d="M3 5v8.5a1.5 1.5 0 001.5 1.5H11" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="mcp-guide-row">
+            <span class="mcp-guide-step-num">2</span>
+            <div class="mcp-guide-body">
+              <span class="mcp-guide-label" data-i18n="mcpStep2Label">在 Playwright 项目根目录创建 .mcp.json</span>
+              <div class="mcp-guide-cmd-wrap">
+                <code class="mcp-guide-cmd" id="mcp-cmd-2">{"mcpServers":{"sop-skill":{"command":"npx","args":["-y","sop-mcp-server"]}}}</code>
+                <button class="mcp-guide-copy" data-copy="mcp-cmd-2" type="button" title="复制">
+                  <svg width="11" height="11" viewBox="0 0 16 16" fill="none" aria-hidden="true"><rect x="5" y="2" width="9" height="11" rx="1.5" stroke="currentColor" stroke-width="1.4"/><path d="M3 5v8.5a1.5 1.5 0 001.5 1.5H11" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="mcp-guide-row">
+            <span class="mcp-guide-step-num">3</span>
+            <div class="mcp-guide-body">
+              <span class="mcp-guide-label" data-i18n="mcpStep3Label">每次使用前启动服务</span>
+              <div class="mcp-guide-cmd-wrap">
+                <code class="mcp-guide-cmd" id="mcp-cmd-3">sop-mcp-server</code>
+                <button class="mcp-guide-copy" data-copy="mcp-cmd-3" type="button" title="复制">
+                  <svg width="11" height="11" viewBox="0 0 16 16" fill="none" aria-hidden="true"><rect x="5" y="2" width="9" height="11" rx="1.5" stroke="currentColor" stroke-width="1.4"/><path d="M3 5v8.5a1.5 1.5 0 001.5 1.5H11" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+                </button>
+              </div>
+            </div>
+          </div>
+          <p class="set-hint mcp-cc-hint-line">一键复制粘贴给 Claude Code 让它帮你装 → <a href="#" id="mcp-copy-all-link">复制全部指令</a></p>
+        </div>
+
+        <!-- ── Voice Provider ── -->
+        <div class="set-section">
+          <div class="set-section-label" data-i18n="setVoiceSection">语音识别</div>
+          <div class="set-field" style="padding:8px 14px 0">
+            <label class="set-label" data-i18n="setProvLabel">服务商</label>
+            <div id="sp-stt-provider" class="custom-select" tabindex="0">
+              <div class="custom-select-trigger">
+                <span class="custom-select-label">手动</span>
+                <svg class="custom-select-arrow" width="11" height="7" viewBox="0 0 11 7" fill="none"><path d="M1 1l4.5 4.5L10 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </div>
+              <div class="custom-select-menu">
+                <div class="custom-select-option" data-value="manual">手动</div>
+                <div class="custom-select-option" data-value="deepgram">Deepgram</div>
+                <div class="custom-select-option" data-value="aliyun">阿里云</div>
+                <div class="custom-select-option" data-value="groq">Groq Whisper</div>
+                <div class="custom-select-option" data-value="google">Google Cloud STT</div>
+                <div class="custom-select-option" data-value="azure">Azure Speech</div>
+                <div class="custom-select-option" data-value="assemblyai">AssemblyAI</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Deepgram section -->
+          <section id="sp-section-deepgram" class="sp-section">
+            <div class="set-field">
+              <label class="set-label">API Key</label>
+              <div class="set-input-wrap">
+                <input type="password" id="sp-dg-key" class="set-input has-eye" placeholder="dg_xxxxxxxx">
+                <button class="set-eye" data-sp-eye="sp-dg-key" type="button" data-i18n-title="setEyeTitle" title="显示/隐藏">
+                  <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><path d="M1 8s2.5-5 7-5 7 5 7 5-2.5 5-7 5-7-5-7-5z" stroke="currentColor" stroke-width="1.4"/><circle cx="8" cy="8" r="2" stroke="currentColor" stroke-width="1.4"/></svg>
+                </button>
+              </div>
+              <p class="set-hint" data-i18n-html="setDgFree">免费注册赠 $200 → <a href="https://console.deepgram.com/signup" target="_blank" rel="noreferrer">console.deepgram.com</a></p>
+            </div>
+            <div class="set-field">
+              <label class="set-label" data-i18n="setLangLabel">识别语言</label>
+              <div id="sp-dg-lang" class="custom-select" tabindex="0">
+                <div class="custom-select-trigger">
+                  <span class="custom-select-label">中文（普通话）</span>
+                  <svg class="custom-select-arrow" width="11" height="7" viewBox="0 0 11 7" fill="none"><path d="M1 1l4.5 4.5L10 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+                <div class="custom-select-menu"><div class="custom-select-option" data-value="zh-CN">中文（普通话）</div><div class="custom-select-option" data-value="en-US">English (US)</div></div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Aliyun section -->
+          <section id="sp-section-aliyun" class="sp-section">
+            <div class="set-field">
+              <label class="set-label">DashScope API Key</label>
+              <div class="set-input-wrap">
+                <input type="password" id="sp-aliyun-key" class="set-input has-eye" placeholder="sk-xxxxxxxxxxxx">
+                <button class="set-eye" data-sp-eye="sp-aliyun-key" type="button" data-i18n-title="setEyeTitle" title="显示/隐藏">
+                  <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><path d="M1 8s2.5-5 7-5 7 5 7 5-2.5 5-7 5-7-5-7-5z" stroke="currentColor" stroke-width="1.4"/><circle cx="8" cy="8" r="2" stroke="currentColor" stroke-width="1.4"/></svg>
+                </button>
+              </div>
+            </div>
+            <div class="set-field-row">
+              <div class="set-field">
+                <label class="set-label" data-i18n="setRegionLabel">服务节点</label>
+                <div id="sp-aliyun-region" class="custom-select" tabindex="0">
+                <div class="custom-select-trigger">
+                  <span class="custom-select-label">中国大陆</span>
+                  <svg class="custom-select-arrow" width="11" height="7" viewBox="0 0 11 7" fill="none"><path d="M1 1l4.5 4.5L10 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+                <div class="custom-select-menu"><div class="custom-select-option" data-value="cn">中国大陆</div><div class="custom-select-option" data-value="us">美国</div><div class="custom-select-option" data-value="intl">国际</div></div>
+              </div>
+              </div>
+              <div class="set-field">
+                <label class="set-label" data-i18n="setModelLabel">模型</label>
+                <input type="text" id="sp-aliyun-model" class="set-input" placeholder="qwen3-asr-flash-realtime">
+              </div>
+            </div>
+          </section>
+
+          <!-- Groq section -->
+          <section id="sp-section-groq" class="sp-section">
+            <div class="set-field">
+              <label class="set-label">Groq API Key</label>
+              <div class="set-input-wrap">
+                <input type="password" id="sp-groq-key" class="set-input has-eye" placeholder="gsk_xxxxxxxx">
+                <button class="set-eye" data-sp-eye="sp-groq-key" type="button" data-i18n-title="setEyeTitle" title="显示/隐藏">
+                  <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><path d="M1 8s2.5-5 7-5 7 5 7 5-2.5 5-7 5-7-5-7-5z" stroke="currentColor" stroke-width="1.4"/><circle cx="8" cy="8" r="2" stroke="currentColor" stroke-width="1.4"/></svg>
+                </button>
+              </div>
+              <p class="set-hint">免费注册赠 $200 → <a href="https://console.groq.com" target="_blank" rel="noreferrer">console.groq.com</a></p>
+            </div>
+            <div class="set-field">
+              <label class="set-label" data-i18n="setModelLabel">模型</label>
+              <div id="sp-groq-model" class="custom-select" tabindex="0">
+                <div class="custom-select-trigger">
+                  <span class="custom-select-label">whisper-large-v3</span>
+                  <svg class="custom-select-arrow" width="11" height="7" viewBox="0 0 11 7" fill="none"><path d="M1 1l4.5 4.5L10 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+                <div class="custom-select-menu"><div class="custom-select-option" data-value="whisper-large-v3">whisper-large-v3</div><div class="custom-select-option" data-value="whisper-large-v3-turbo">whisper-large-v3-turbo</div></div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Google section -->
+          <section id="sp-section-google" class="sp-section">
+            <div class="set-field">
+              <label class="set-label">Google Cloud API Key</label>
+              <div class="set-input-wrap">
+                <input type="password" id="sp-google-key" class="set-input has-eye" placeholder="AIzaSyxxxxxxx">
+                <button class="set-eye" data-sp-eye="sp-google-key" type="button" data-i18n-title="setEyeTitle" title="显示/隐藏">
+                  <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><path d="M1 8s2.5-5 7-5 7 5 7 5-2.5 5-7 5-7-5-7-5z" stroke="currentColor" stroke-width="1.4"/><circle cx="8" cy="8" r="2" stroke="currentColor" stroke-width="1.4"/></svg>
+                </button>
+              </div>
+              <p class="set-hint">每月免费 60 分钟 → <a href="https://console.cloud.google.com/apis/library/speech.googleapis.com" target="_blank" rel="noreferrer">Google Cloud Console</a></p>
+            </div>
+            <div class="set-field">
+              <label class="set-label" data-i18n="setLangLabel">识别语言</label>
+              <div id="sp-google-lang" class="custom-select" tabindex="0">
+                <div class="custom-select-trigger">
+                  <span class="custom-select-label">中文（普通话）</span>
+                  <svg class="custom-select-arrow" width="11" height="7" viewBox="0 0 11 7" fill="none"><path d="M1 1l4.5 4.5L10 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+                <div class="custom-select-menu"><div class="custom-select-option" data-value="zh-CN">中文（普通话）</div><div class="custom-select-option" data-value="en-US">English (US)</div><div class="custom-select-option" data-value="ja-JP">日本語</div><div class="custom-select-option" data-value="ko-KR">한국어</div></div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Azure section -->
+          <section id="sp-section-azure" class="sp-section">
+            <div class="set-field">
+              <label class="set-label">Azure Speech Key</label>
+              <div class="set-input-wrap">
+                <input type="password" id="sp-azure-key" class="set-input has-eye" placeholder="xxxxxxxxxxxxxxxx">
+                <button class="set-eye" data-sp-eye="sp-azure-key" type="button" data-i18n-title="setEyeTitle" title="显示/隐藏">
+                  <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><path d="M1 8s2.5-5 7-5 7 5 7 5-2.5 5-7 5-7-5-7-5z" stroke="currentColor" stroke-width="1.4"/><circle cx="8" cy="8" r="2" stroke="currentColor" stroke-width="1.4"/></svg>
+                </button>
+              </div>
+              <p class="set-hint">每月免费 5 小时 → <a href="https://portal.azure.com" target="_blank" rel="noreferrer">Azure Portal</a></p>
+            </div>
+            <div class="set-field-row">
+              <div class="set-field">
+                <label class="set-label" data-i18n="setRegionLabel">服务节点</label>
+                <div id="sp-azure-region" class="custom-select" tabindex="0">
+                <div class="custom-select-trigger">
+                  <span class="custom-select-label">East Asia</span>
+                  <svg class="custom-select-arrow" width="11" height="7" viewBox="0 0 11 7" fill="none"><path d="M1 1l4.5 4.5L10 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+                <div class="custom-select-menu"><div class="custom-select-option" data-value="eastasia">East Asia</div><div class="custom-select-option" data-value="southeastasia">Southeast Asia</div><div class="custom-select-option" data-value="eastus">East US</div><div class="custom-select-option" data-value="westeurope">West Europe</div></div>
+              </div>
+              </div>
+              <div class="set-field">
+                <label class="set-label" data-i18n="setLangLabel">识别语言</label>
+                <div id="sp-azure-lang" class="custom-select" tabindex="0">
+                <div class="custom-select-trigger">
+                  <span class="custom-select-label">中文（普通话）</span>
+                  <svg class="custom-select-arrow" width="11" height="7" viewBox="0 0 11 7" fill="none"><path d="M1 1l4.5 4.5L10 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+                <div class="custom-select-menu"><div class="custom-select-option" data-value="zh-CN">中文（普通话）</div><div class="custom-select-option" data-value="en-US">English (US)</div><div class="custom-select-option" data-value="ja-JP">日本語</div></div>
+              </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- AssemblyAI section -->
+          <section id="sp-section-assemblyai" class="sp-section">
+            <div class="set-field">
+              <label class="set-label">AssemblyAI API Key</label>
+              <div class="set-input-wrap">
+                <input type="password" id="sp-assemblyai-key" class="set-input has-eye" placeholder="xxxxxxxxxxxxxxxx">
+                <button class="set-eye" data-sp-eye="sp-assemblyai-key" type="button" data-i18n-title="setEyeTitle" title="显示/隐藏">
+                  <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><path d="M1 8s2.5-5 7-5 7 5 7 5-2.5 5-7 5-7-5-7-5z" stroke="currentColor" stroke-width="1.4"/><circle cx="8" cy="8" r="2" stroke="currentColor" stroke-width="1.4"/></svg>
+                </button>
+              </div>
+              <p class="set-hint">免费注册赠 $50 → <a href="https://www.assemblyai.com" target="_blank" rel="noreferrer">assemblyai.com</a></p>
+            </div>
+            <div class="set-field">
+              <label class="set-label" data-i18n="setLangLabel">识别语言</label>
+              <div id="sp-assemblyai-lang" class="custom-select" tabindex="0">
+                <div class="custom-select-trigger">
+                  <span class="custom-select-label">中文</span>
+                  <svg class="custom-select-arrow" width="11" height="7" viewBox="0 0 11 7" fill="none"><path d="M1 1l4.5 4.5L10 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+                <div class="custom-select-menu"><div class="custom-select-option" data-value="zh">中文</div><div class="custom-select-option" data-value="en_us">English (US)</div><div class="custom-select-option" data-value="ja">日本語</div><div class="custom-select-option" data-value="ko">한국어</div></div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Manual section -->
+          <section id="sp-section-manual" class="sp-section">
+            <div class="sp-manual-notice">
+              <div class="sp-manual-icon">
+                <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 3h10M3 6.5h7M3 10h5M3 13.5h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+              </div>
+              <div class="sp-manual-body">
+                <h4 data-i18n="setManualTitle">手动注释模式</h4>
+                <p data-i18n="setManualDesc">无需语音 API，录制后直接为每步操作输入注释。</p>
+              </div>
+            </div>
+          </section>
+          <!-- Voice card: save + test -->
+          <div class="sp-card-actions">
+            <button id="sp-voice-save" class="btn btn-accent btn-sm" type="button">
+              <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2 8.5 6 12.5 14 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <span data-i18n="save">保存</span>
+            </button>
+            <button id="sp-voice-test" class="btn btn-ghost btn-sm" type="button">
+              <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M5 8l2 2 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.4"/></svg>
+              <span data-i18n="testConnection">测试连接</span>
+            </button>
+            <div id="sp-voice-status" class="set-status" style="flex-basis:100%;margin-top:0"></div>
+          </div>
+        </div>
+
+        <!-- ── Claude AI Key ── -->
+        <div class="set-section">
+          <div class="set-section-label" data-i18n="setAiSection">AI 蒸馏引擎</div>
+          <div class="sp-section visible" style="padding-top:10px">
+            <div class="set-field">
+              <label class="set-label">Claude API Key</label>
+              <div class="set-input-wrap">
+                <input type="password" id="sp-claude-key" class="set-input has-eye" placeholder="sk-ant-api03-xxxxxxxx">
+                <button class="set-eye" data-sp-eye="sp-claude-key" type="button" data-i18n-title="setEyeTitle" title="显示/隐藏">
+                  <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><path d="M1 8s2.5-5 7-5 7 5 7 5-2.5 5-7 5-7-5-7-5z" stroke="currentColor" stroke-width="1.4"/><circle cx="8" cy="8" r="2" stroke="currentColor" stroke-width="1.4"/></svg>
+                </button>
+              </div>
+              <p class="set-hint" data-i18n-html="setAiHint">用于 SOP → Playwright 蒸馏 → <a href="https://console.anthropic.com/keys" target="_blank" rel="noreferrer">console.anthropic.com</a></p>
+            </div>
+          </div>
+          <!-- AI card: save + test -->
+          <div class="sp-card-actions">
+            <button id="sp-ai-save" class="btn btn-accent btn-sm" type="button">
+              <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2 8.5 6 12.5 14 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <span data-i18n="save">保存</span>
+            </button>
+            <button id="sp-ai-test" class="btn btn-ghost btn-sm" type="button">
+              <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M5 8l2 2 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.4"/></svg>
+              <span data-i18n="testConnection">测试连接</span>
+            </button>
+            <div id="sp-ai-status" class="set-status" style="flex-basis:100%;margin-top:0"></div>
+          </div>
+        </div>
+
+        <!-- ── 关于 ── -->
+        <div class="set-section">
+          <div class="set-section-label">关于 SOP Skill</div>
+          <div class="sp-about">
+            <p class="sp-about-text">SOP Skill 让 AI 学会你的操作。录制一次操作流程，AI 自动蒸馏为可复用的 SOP，让 Claude 像你一样工作。</p>
+            <p class="sp-about-text">未来将集成 Claude Code SDK 与 Codex SDK，打通从录制到自动化执行的完整闭环。</p>
+            <p class="sp-about-contact">联系：<a href="mailto:JeffAI2026@163.com">JeffAI2026@163.com</a></p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ④ 录制与预览（单页） -->
+    <div id="view-recording" class="view">
+      <div class="rec-bar">
+        <div class="rec-ind"><span class="rec-dot"></span><span id="rec-label" class="rec-label">录制中</span></div>
+        <div class="rec-right">
+          <span id="mic-status" class="mic-status" title="语音识别">
+            <span id="mic-icon" class="mic-icon">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><rect x="4" y="1" width="6" height="8" rx="3" stroke="currentColor" stroke-width="1.4"/><path d="M2 8c0 2.76 2.24 5 5 5s5-2.24 5-5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" fill="none"/><line x1="7" y1="13" x2="7" y2="14" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+            </span>
+            <span id="vol-indicator" class="vol-indicator">
+              <span class="vol-bar"></span><span class="vol-bar"></span><span class="vol-bar"></span><span class="vol-bar"></span><span class="vol-bar"></span>
+            </span>
+          </span>
+          <div id="rec-timer" class="rec-timer">00:00</div>
+        </div>
+      </div>
+      <!-- Hidden voice-box for Deepgram state (not displayed) -->
+      <div id="voice-box" style="display:none"></div>
+      <div class="section grow">
+        <h3 class="sec-title">
+          <span id="sec-title-text">操作记录</span>
+          <span id="ev-count" class="badge">0</span>
+          <button id="btn-add-note" class="btn-note-add hidden" type="button" data-i18n-title="addNote" title="添加注释">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M8 2L12 6 5 13H2V10L8 2Z" stroke="currentColor" stroke-width="1.35" stroke-linejoin="round"/><path d="M7 3L11 7" stroke="currentColor" stroke-width="1.35" stroke-linecap="round"/></svg>
+            <span data-i18n="addNote">添加注释</span>
+          </button>
+        </h3>
+        <div id="note-input-bar" class="note-input-bar hidden">
+          <input id="note-input" class="note-input-field" type="text" autocomplete="off" data-i18n-placeholder="notePlaceholder" placeholder="输入注释…" />
+          <button id="btn-note-ok" class="note-btn-ok" type="button" data-i18n-title="noteConfirm" title="确认">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2.5 7L5.5 10 11.5 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <button id="btn-note-cancel" class="note-btn-x" type="button" data-i18n-title="noteCancelBtn" title="取消">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 2L10 10M10 2L2 10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+          </button>
+        </div>
+        <div id="ev-list" class="ev-list">
+          <div class="tl-empty" id="timeline-placeholder">
+            <div class="tl-empty-hint">
+              <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+                <circle cx="14" cy="14" r="11" stroke="currentColor" stroke-width="1.3" opacity="0.3"/>
+                <path d="M9 14.5l3 3 7-7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" opacity="0.5"/>
+              </svg>
+            </div>
+            <p class="tl-empty-title" data-i18n="waitingPlaceholder">等待操作记录</p>
+            <ul class="tl-empty-tips">
+              <li data-i18n="tlEmptyHint1">在页面上点击、输入或导航</li>
+              <li data-i18n="tlEmptyHint2">对着麦克风说出操作意图</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div id="rec-actions" class="rec-actions">
+        <button id="btn-stop" class="btn btn-danger btn-lg">
+          <span class="bi-svg"><svg width="13" height="13" viewBox="0 0 13 13" fill="currentColor" aria-hidden="true"><rect x="1.5" y="1.5" width="10" height="10" rx="2"/></svg></span>
+          停止录制
+        </button>
+        <button id="btn-pause" class="btn btn-ghost btn-lg">
+          <span class="bi-svg"><svg width="13" height="13" viewBox="0 0 13 13" fill="currentColor" aria-hidden="true"><rect x="2" y="1.5" width="3.5" height="10" rx="1.2"/><rect x="7.5" y="1.5" width="3.5" height="10" rx="1.2"/></svg></span>
+          暂停
+        </button>
+      </div>
+      <div id="preview-actions" class="preview-actions hidden">
+
+        <!-- PRIMARY: Push to Claude Code -->
+        <button id="btn-push-mcp" class="btn btn-mcp btn-lg btn-push-primary" data-i18n-title="pushToClaudeCodeTitle" title="推送到本地 MCP Server，Claude Code 直接生成 Playwright 测试">
+          <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 2v8m0 0l-3-3m3 3l3-3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M3 13h10" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+          <span data-i18n="pushToClaudeCode">推送到 Claude Code</span>
+          <span id="mcp-conn-tag" class="mcp-conn-tag mcp-conn-tag--checking">
+            <span class="mcp-conn-dot"></span>
+            <span id="mcp-conn-label">检测中</span>
+          </span>
+        </button>
+        <p class="push-hint" id="push-hint-text" data-i18n="pushHintText">Claude Code 收到后自动生成 Playwright 测试脚本</p>
+        <!-- Prompt panel shown after successful push -->
+        <div id="push-prompt-panel" class="push-prompt-panel" style="display:none">
+          <div class="push-prompt-head">
+            <svg width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8.5L6.5 12 13 4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span data-i18n="pushPromptHead">已推送到 Claude Code</span>
+          </div>
+          <div class="push-sop-meta">
+            <span class="push-sop-title" id="push-sop-title">—</span>
+            <code id="push-sop-id" class="push-sop-id">—</code>
+          </div>
+          <div class="push-prompt-label" data-i18n="pushPromptLabel">在 Claude Code 中输入以下提示词：</div>
+          <div class="push-prompt-code-wrap">
+            <span class="push-prompt-code" id="push-prompt-text">调用 sop-skill 工具，获取最新 SOP，生成 Playwright 测试写到 tests/ 目录，运行测试并修复错误</span>
+            <button class="push-prompt-copy" id="btn-copy-prompt" data-i18n-title="pushCopyTitle" title="复制提示词" type="button">
+              <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true"><rect x="5" y="2" width="9" height="11" rx="1.5" stroke="currentColor" stroke-width="1.4"/><path d="M3 5v8.5a1.5 1.5 0 001.5 1.5H11" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+            </button>
+          </div>
+          <div class="push-verify-tip">
+            <svg width="11" height="11" viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="8" cy="8" r="6.5" stroke="currentColor" stroke-width="1.4"/><path d="M8 5v4m0 2v.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+            <span id="push-verify-tip-text">Claude Code 回复时会提到 SOP 标题，即表示成功收到</span>
+          </div>
+        </div>
+
+        <!-- DIVIDER -->
+        <div class="preview-actions-divider">
+          <span data-i18n="otherExportOptions">其他导出选项</span>
+        </div>
+
+        <!-- SECONDARY: copy / download / redo -->
+        <div class="preview-actions-secondary">
+          <button id="btn-export" class="btn btn-ghost btn-sm" data-i18n-title="btnExportTitle" title="复制 Markdown 格式 SOP">
+            <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true"><rect x="5" y="2" width="9" height="11" rx="1.5" stroke="currentColor" stroke-width="1.4"/><path d="M3 5v8.5a1.5 1.5 0 001.5 1.5H11" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+            复制 Markdown
+          </button>
+          <button id="btn-copy-json" class="btn btn-ghost btn-sm" data-i18n-title="btnCopyJsonTitle" title="复制 JSON 格式（手动粘贴到 Claude Code）">
+            复制 JSON
+          </button>
+          <button id="btn-download" class="btn btn-ghost btn-sm" data-i18n-title="btnDownloadTitle" title="下载完整 HTML 文件（含截图）">
+            <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 3v7m0 0l-3-3m3 3l3-3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M3 12h10" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+            下载 HTML
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ⑤ 漫画章节 -->
+    <div id="view-comic" class="view">
+      <div class="set-header">
+        <button id="btn-comic-back" class="set-back" type="button" aria-label="返回">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M10 3L5 8l5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <span class="set-title">PP连载漫画</span>
+        <button id="btn-comic-next" class="comic-next-btn hidden" type="button">下一章 <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M6 3l5 5-5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      </div>
+      <!-- chapter list -->
+      <div id="comic-chapters" class="comic-chapters"></div>
+      <!-- comic strip viewer (hidden by default) -->
+      <div id="comic-viewer" class="comic-viewer hidden">
+        <div id="comic-panels" class="comic-panels"></div>
+      </div>
+    </div>
+
+  </main>
+
+  <div id="img-viewer" class="img-viewer hidden" aria-hidden="true">
+    <button id="img-viewer-close" class="img-viewer-close" aria-label="关闭预览">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2.5 2.5L11.5 11.5M11.5 2.5L2.5 11.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+    <img id="img-viewer-img" class="img-viewer-img" alt="截图预览" />
+  </div>
+
+  <!-- Distill Modal -->
+  <div id="distill-modal" class="distill-modal hidden" aria-hidden="true">
+    <div class="distill-modal-inner">
+      <div class="distill-modal-head">
+        <div class="distill-modal-title">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M7 1L8.5 5.5H13L9.5 8.5L11 13L7 10L3 13L4.5 8.5L1 5.5H5.5L7 1Z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg>
+          蒸馏结果
+        </div>
+        <button id="distill-modal-close" class="distill-close-btn" type="button" aria-label="关闭">
+          <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true"><path d="M2 2L11 11M11 2L2 11" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+        </button>
+      </div>
+
+      <!-- Loading -->
+      <div id="distill-loading" class="distill-loading">
+        <div class="distill-spinner"></div>
+        <p class="distill-loading-title">正在蒸馏 SOP…</p>
+        <p class="distill-loading-sub">Claude 正在分析操作记录，生成语义化 Playwright 脚本</p>
+      </div>
+
+      <!-- Result -->
+      <div id="distill-result" class="distill-result hidden">
+        <div class="distill-tab-bar">
+          <button class="distill-tab active" data-tab="playwright" type="button">.spec.ts</button>
+          <button class="distill-tab" data-tab="mcp" type="button">skill.json</button>
+          <button class="distill-tab" data-tab="notes" type="button">说明</button>
+        </div>
+        <div id="distill-pane-playwright" class="distill-pane">
+          <div class="distill-code-wrap">
+            <button id="distill-copy-playwright" class="distill-copy-btn" type="button">复制</button>
+            <pre id="distill-code-playwright" class="distill-code"></pre>
+          </div>
+        </div>
+        <div id="distill-pane-mcp" class="distill-pane hidden">
+          <div class="distill-code-wrap">
+            <button id="distill-copy-mcp" class="distill-copy-btn" type="button">复制</button>
+            <pre id="distill-code-mcp" class="distill-code"></pre>
+          </div>
+        </div>
+        <div id="distill-pane-notes" class="distill-pane hidden">
+          <div class="distill-notes-wrap">
+            <p id="distill-notes-text" class="distill-notes-text"></p>
+            <div id="distill-params-list" class="distill-params-list"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Error -->
+      <div id="distill-error" class="distill-error hidden">
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true"><circle cx="14" cy="14" r="11" stroke="#EF4444" stroke-width="1.5"/><path d="M14 9v6" stroke="#EF4444" stroke-width="1.8" stroke-linecap="round"/><circle cx="14" cy="18.5" r="1" fill="#EF4444"/></svg>
+        <p id="distill-error-msg" class="distill-error-msg"></p>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script src="sidepanel.js"></script>
+</body>
+
+</html>

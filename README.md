@@ -1,0 +1,188 @@
+<p align="center">
+  <img src="icons/icon128.png" width="80" alt="SOP Skill Logo">
+</p>
+
+<h1 align="center">SOP Skill</h1>
+
+<p align="center">
+  <strong>录制你的操作，生成 AI 可执行的 SOP</strong><br>
+  Record your browser actions + voice narration → Generate structured SOPs for AI agents
+</p>
+
+<p align="center">
+  <a href="https://chromewebstore.google.com/detail/gomongcoeejkpemmkehffafgadbhpbgge">
+    <img src="https://img.shields.io/badge/Chrome%20Web%20Store-Install-blue?style=for-the-badge&logo=googlechrome&logoColor=white" alt="Chrome Web Store">
+  </a>
+</p>
+
+<p align="center">
+  <b>中文</b> · <a href="README_EN.md">English</a>
+</p>
+
+---
+
+## 什么是 SOP Skill？
+
+**SOP Skill** 是一款 Chrome 扩展，帮助你通过「边操作边说话」的方式，自动录制浏览器操作流程，生成结构化的 SOP（标准操作文档）。
+
+生成的 SOP 不仅**人能看懂**（图文并茂、步骤清晰），还能**直接发给 AI Agent 执行**（包含精确的 CSS 选择器和操作语义）。
+
+> 当前这个目录是 **SOP Skill 开源版（OSS）**，需要你自己配置语音识别 API。
+
+> 🎯 **一句话理解**：你做一遍，AI 帮你做一万遍。
+
+---
+
+## 功能特性
+
+### 🎙️ 实时语音转文字
+- 支持 **Deepgram** 与 **阿里云 Qwen 实时语音** 两种自配方案
+- 当前提供 **中文（zh-CN）/英文（en-US）** 识别配置
+- 语音讲解自动关联到对应操作步骤（无意义文本会自动过滤）
+- 所有 Provider 凭证都只保存在你的本地浏览器里
+
+### 🖱️ 智能操作捕获
+- 自动记录点击、输入、滚动、页面导航
+- **文字选择** vs **点击** 精准区分
+- 智能过滤无意义操作（空白区域点击等）
+- 自动识别元素类型（按钮、链接、输入框、图标等）
+
+### 📸 缩略图截图预览
+- 当前对 **点击（click）/选择（select）** 自动截图并标注点击位置
+- 截图以小缩略图嵌入操作标签内（录制中与录制后一致）
+- 点击缩略图可弹层放大查看
+
+### 📋 单页混合时间线
+- **录制中** 与 **停止后预览** 使用同一套时间线视图，避免来回切页
+- **语音** → 连续合并为段落，占位提示为「识别中」
+- **操作** → 紧凑标签式排列，滚动支持合并展示（如 `滚动 xN`）
+
+### 📄 独立网页导出
+- 一键导出为自包含 HTML 文件
+- 图文并茂，包含步骤截图与讲解分段
+- 可直接发送给他人或上传给 AI Agent
+- 内置文档说明与「执行细节（给 Agent）」，AI 拿到即懂
+
+## 最近更新（2026-03）
+
+- 更新扩展图标资源：`icons/icon16.png`、`icons/icon48.png`、`icons/icon128.png`、`icons/logo.png`
+- 开源版当前支持自配 `Deepgram` 与 `阿里云 Qwen 实时语音`
+- 录制页与预览页已统一为单页时间线展示
+- 侧栏文案已调整为「执行细节（给 Agent）」
+- 语音占位从横线改为「识别中」
+- 操作标签支持内嵌截图缩略图，点击可放大预览
+- 未识别/无意义语音文本（如 `...`、纯标点）不会进入时间线和预览
+- 滚动操作按 PRD 规则过滤，并在实时时间线中合并展示（如 `滚动 xN`）
+- 阿里云实时语音链路补充了更稳的停止流程与 `AudioWorklet` 采集回退
+
+---
+
+## 使用场景
+
+| 场景 | 怎么用 |
+|------|--------|
+| **教 AI 做重复任务** | 录一遍操作流程，导出 SOP 发给 AI Agent 自动执行 |
+| **制作产品操作手册** | 边操作边讲解，自动生成图文教程 |
+| **Bug 复现** | 录制出 Bug 的操作路径，附带截图和选择器 |
+| **新人培训** | 老员工录制常见操作，新人看 SOP 自学 |
+| **流程审计** | 记录操作步骤，留存操作证据 |
+
+---
+
+## 快速开始
+
+### 1. 安装
+
+> 目前为开发者预览版，需手动加载。
+
+1. 下载本项目代码
+2. 打开 Chrome → `chrome://extensions/`
+3. 开启「开发者模式」
+4. 点击「加载已解压的扩展程序」→ 选择项目文件夹
+
+### 2. 配置语音识别
+
+1. 选择一个 Provider：`Deepgram` 或 `阿里云 Qwen 实时语音`
+2. 准备对应的 API Key
+3. 打开扩展设置页（侧栏「设置」或扩展选项页）
+4. 粘贴 Key → 测试连接 → 保存
+
+### 3. 开始录制
+
+1. 打开要演示的网页
+2. 点击浏览器工具栏 SOP Skill 图标打开侧栏
+3. 点击 **⏺ 开始录制**
+4. 正常操作浏览器，同时用语音讲解每一步
+5. 完成后点击 **⏹ 停止录制** → 自动生成 SOP
+6. 如需分享，点击 **导出 SOP** 下载独立 HTML 文件
+
+---
+
+## 技术架构
+
+```
+┌─────────────────────────────────────────────┐
+│  Chrome Extension (Manifest V3)             │
+├──────────────┬──────────────┬───────────────┤
+│ content.js   │ sidepanel.js │ background.js │
+│ · 捕获操作    │ · 单页时间线 UI│ · 状态管理     │
+│ · 元素描述    │ · 语音 STT    │ · SOP 生成    │
+│ · 事件过滤    │ · 导出网页     │ · 截图标注     │
+└──────────────┴──────────────┴───────────────┘
+         │                          │
+    ┌───────────────┐         ┌──────┴──────┐
+    │ Deepgram /    │         │ Offscreen   │
+    │ Aliyun STT    │         │ Canvas      │
+    │ WebSocket API │         │ (标注截图)   │
+    └───────────────┘         └─────────────┘
+```
+
+- **content.js** — 注入页面，捕获用户操作（点击、输入、文字选择）
+- **sidepanel.js** — 侧栏 UI，录制/预览统一时间线、Deepgram / 阿里云语音识别、SOP 导出
+- **background.js** — Service Worker，管理录制状态、生成 SOP、截图标注
+- **annotate.js** — Offscreen 文档，在截图上标注点击位置
+- **aliyun-pcm-worklet.js** — 阿里云实时语音的 PCM 采集 worklet
+
+---
+
+## 隐私与安全
+
+- 🔒 **API Key 存储在本地** — 仅保存在 `chrome.storage.local`，不上传任何服务器
+- 🔒 **语音数据** — 直接发送到你选择的语音 Provider（Deepgram 或阿里云）处理，SOP Skill 不存储任何音频
+- 🔒 **截图数据** — 所有截图仅在本地处理，不离开你的浏览器
+- 🔒 **开源透明** — 代码完全开源，可自行审计
+
+---
+
+## 路线图
+
+- [x] 实时语音转文字（Deepgram / 阿里云）
+- [x] 智能操作捕获与过滤
+- [x] 截图点击位置标注
+- [x] 混合时间线（语音块 + 操作标签）
+- [x] 独立网页导出
+- [ ] 讯飞语音引擎（国内用户无需翻墙）
+- [ ] AI 智能润色 SOP（大模型优化文案）
+- [ ] 云端 SOP 分享（在线链接）
+- [x] Chrome Web Store 上架
+- [ ] 团队协作（SOP 库管理）
+- [ ] 多语言界面
+
+---
+
+## 贡献
+
+欢迎提交 Issue 和 Pull Request！
+
+---
+
+## 许可证
+
+MIT License
+
+---
+
+<p align="center">
+  <strong>SOP Skill</strong> — 让 AI 看见你的操作<br>
+  <sub>Built with ❤️ for the AI-native workflow</sub>
+</p>
