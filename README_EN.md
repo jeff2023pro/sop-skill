@@ -10,7 +10,7 @@
 </p>
 
 <p align="center">
-  <a href="https://chromewebstore.google.com/detail/gomongcoeejkpemmkehffafgadbhpbgge">
+  <a href="https://chromewebstore.google.com/detail/gomongcoeejkpemmkehffafgadbhpbge?utm_source=item-share-cb">
     <img src="https://img.shields.io/badge/Chrome%20Web%20Store-Install-blue?style=for-the-badge&logo=googlechrome&logoColor=white" alt="Chrome Web Store">
   </a>
 </p>
