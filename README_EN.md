@@ -5,8 +5,8 @@
 <h1 align="center">SOP Skill</h1>
 
 <p align="center">
-  <strong>Record your actions, generate AI-executable SOPs</strong><br>
-  Browser action recording + voice narration → Structured SOPs for AI agents
+  <strong>Transform human SOPs into AI-executable SOPs</strong><br>
+  把人的 SOP 转化成 AI 的 SOP
 </p>
 
 <p align="center">
